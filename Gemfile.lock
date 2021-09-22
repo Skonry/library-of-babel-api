@@ -87,6 +87,7 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.12.2-x64-mingw32)
       racc (~> 1.4)
+    pg (1.2.3)
     puma (3.12.6)
     racc (1.5.2)
     rack (2.2.3)
@@ -129,7 +130,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     thor (1.1.0)
     thread_safe (0.3.6)
     tzinfo (1.2.9)
@@ -151,11 +151,11 @@ DEPENDENCIES
   fast_jsonapi
   jsonapi_parameters
   jwt
+  pg
   puma (~> 3.11)
   rack-cors
   rails (~> 6.0.0)
   simple_command
-  sqlite3 (~> 1.4)
   tzinfo-data
 
 RUBY VERSION
