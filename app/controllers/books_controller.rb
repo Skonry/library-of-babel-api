@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class BooksController < ApplicationController
   skip_before_action :authenticate_request, only: [:index, :show]
 
@@ -7,12 +9,12 @@ class BooksController < ApplicationController
   end
 
   def create
-    book = Book.create(book_params)
-    decoded_data = Base64.decode64(params[:data][:attributes][:cover].split(',')[1])
-    book.cover.attach(
-      io: StringIO.new(decoded_data),
-      filename: 'image.jpg'
-    )
+    params = book_params
+
+    image = Cloudinary::Uploader.upload(params[:cover])
+
+    book = Book.create(params.except(:cover).merge(cover_url: image['url']))
+    
     json_response(BookSerializer.new(book).serialized_json, 201)
   end
 
@@ -23,7 +25,14 @@ class BooksController < ApplicationController
 
   def update
     book = Book.find(params[:id])
-    book.update!(book_params)
+
+    params = book_params
+    if params.key?(:cover)
+      image = Cloudinary::Uploader.upload(params[:cover])
+      params = params.except(:cover).merge(cover_url: image['url'])
+
+    book.update!(params)
+    
     json_response(BookSerializer.new(book).serialized_json)
   end
 
@@ -37,6 +46,6 @@ class BooksController < ApplicationController
 
   def book_params
     params.from_jsonapi.require(:book)
-      .permit(:title, :author)
+      .permit(:title, :author, :cover)
   end
 end

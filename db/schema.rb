@@ -10,13 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_05_213411) do
+ActiveRecord::Schema.define(version: 2021_10_01_201251) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -38,30 +41,31 @@ ActiveRecord::Schema.define(version: 2020_01_05_213411) do
     t.string "author"
     t.integer "rating"
     t.text "description"
+    t.string "cover_url"
   end
 
   create_table "reviews", force: :cascade do |t|
     t.text "content"
-    t.integer "book_id"
-    t.integer "user_id"
+    t.bigint "book_id"
+    t.bigint "user_id"
     t.index ["book_id"], name: "index_reviews_on_book_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "shelves", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_shelves_on_user_id"
   end
 
   create_table "shelves_user_books", id: false, force: :cascade do |t|
-    t.integer "shelf_id", null: false
-    t.integer "user_book_id", null: false
+    t.bigint "shelf_id", null: false
+    t.bigint "user_book_id", null: false
   end
 
   create_table "user_books", force: :cascade do |t|
-    t.integer "book_id"
-    t.integer "user_id"
+    t.bigint "book_id"
+    t.bigint "user_id"
     t.integer "user_rating"
     t.index ["book_id"], name: "index_user_books_on_book_id"
     t.index ["user_id"], name: "index_user_books_on_user_id"
