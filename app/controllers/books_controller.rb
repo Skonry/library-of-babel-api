@@ -30,6 +30,7 @@ class BooksController < ApplicationController
     if params.key?(:cover)
       image = Cloudinary::Uploader.upload(params[:cover])
       params = params.except(:cover).merge(cover_url: image['url'])
+    end
 
     book.update!(params)
     
