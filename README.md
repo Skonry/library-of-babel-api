@@ -27,6 +27,7 @@ A live demo can be viewed here:
 `cd library-of-babel-api`
 
 3. Create the database.yml file
+`cp config/database.yml.example config/database.yml`
 
 4. Install the gems:
 `bundle install`
@@ -36,7 +37,8 @@ A live demo can be viewed here:
 `rails db:migrate`
 `rails db:seed`
 
-6. Create account in Cloudinary service
+6. Create account in Cloudinary service and configure Cloudinary library
+<https://cloudinary.com/documentation/rails_integration#configuration>
 
 7. Start app:
 `rails server`
